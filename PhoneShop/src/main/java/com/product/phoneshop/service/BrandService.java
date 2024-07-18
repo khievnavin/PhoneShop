@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface BrandService {
-    Brand save(Brand entity);
+    Brand save(BrandDTO entity);
     Brand getById(Integer id);
     List<Brand> getAllBrand();
     Brand update(Integer id, BrandDTO dto);

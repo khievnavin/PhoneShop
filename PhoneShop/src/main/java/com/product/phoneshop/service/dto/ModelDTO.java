@@ -3,15 +3,12 @@ package com.product.phoneshop.service.dto;
 import lombok.Builder;
 import lombok.Data;
 
-//@Setter
-//@Getter
 @Data
 @Builder
-public class BrandDTO {
-    /*
-     return information to user (req,res)
-     */
+public class ModelDTO {
+
     private Integer id;
     private String name;
-
+    //private Integer brandId;
+    private BrandDTO brandDTO;
 }
