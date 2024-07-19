@@ -28,7 +28,6 @@ public class BrandController {
 
     @GetMapping("{id}")
     public ResponseEntity<Brand> getById(@PathVariable("id") int id) throws ServiceException {
-
         return ResponseEntity.ok(brandService.getById(id));
     }
 

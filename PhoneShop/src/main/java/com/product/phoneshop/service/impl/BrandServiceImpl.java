@@ -20,11 +20,10 @@ import java.util.Optional;
 public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
-
     private final BrandMapper brandMapper;
 
     @Override
-    public Brand save(BrandDTO brandDTO) throws ServiceException {
+    public Brand save(BrandDTO brandDTO){
 
         Brand brand = brandMapper.toEntity(brandDTO);
 

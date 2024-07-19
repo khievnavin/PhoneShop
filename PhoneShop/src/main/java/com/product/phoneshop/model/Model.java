@@ -17,7 +17,7 @@ public class Model {
   @Column(name = "model_name") //for custom name table
     private  String name;
 
-    @ManyToOne(fetch = FetchType.LAZY) //Lazy for want to know about info not early repaid , Eager repaid
+    @ManyToOne(fetch = FetchType.EAGER) //Lazy for want to know about info not early repaid , Eager repaid
   @JoinColumn(name = "brand_id") //for custom name table
     private  Brand brand;
 }
