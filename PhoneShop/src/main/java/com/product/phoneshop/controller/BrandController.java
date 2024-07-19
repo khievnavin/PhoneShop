@@ -1,5 +1,6 @@
 package com.product.phoneshop.controller;
 
+import com.product.phoneshop.exception.ServiceException;
 import com.product.phoneshop.mapper.BrandMapper;
 import com.product.phoneshop.model.Brand;
 import com.product.phoneshop.service.BrandService;
@@ -19,14 +20,14 @@ public class BrandController {
     private final BrandMapper brandMapper;
 
     @PostMapping
-    public ResponseEntity<Brand> create(@RequestBody BrandDTO brandDTO) {
+    public ResponseEntity<Brand> create(@RequestBody BrandDTO brandDTO) throws ServiceException {
        // Brand brand = BrandMapper.INSTANCE.toEntity(brandDTO);
         var  brand = brandService.save(brandDTO);
         return ResponseEntity.ok(brand);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Brand> getById(@PathVariable("id") int id) {
+    public ResponseEntity<Brand> getById(@PathVariable("id") int id) throws ServiceException {
 
         return ResponseEntity.ok(brandService.getById(id));
     }
@@ -43,12 +44,12 @@ public class BrandController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Brand> update(@PathVariable("id") int id, @RequestBody BrandDTO brandDTO) {
+    public ResponseEntity<Brand> update(@PathVariable("id") int id, @RequestBody BrandDTO brandDTO) throws ServiceException {
         return ResponseEntity.ok(brandService.update(id, brandDTO));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Brand> delete(@PathVariable("id") int id) {
+    public ResponseEntity<Brand> delete(@PathVariable("id") int id) throws ServiceException {
         brandService.delete(id);
         return ResponseEntity.ok().build();
     }

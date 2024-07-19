@@ -1,5 +1,6 @@
 package com.product.phoneshop.service.impl;
 
+import com.product.phoneshop.exception.ServiceException;
 import com.product.phoneshop.mapper.BrandMapper;
 import com.product.phoneshop.model.Brand;
 import com.product.phoneshop.repository.BrandRepository;
@@ -7,11 +8,8 @@ import com.product.phoneshop.service.BrandService;
 import com.product.phoneshop.service.dto.BrandDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +24,7 @@ public class BrandServiceImpl implements BrandService {
     private final BrandMapper brandMapper;
 
     @Override
-    public Brand save(BrandDTO brandDTO) {
+    public Brand save(BrandDTO brandDTO) throws ServiceException {
 
         Brand brand = brandMapper.toEntity(brandDTO);
 
@@ -34,23 +32,25 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand getById(Integer id) {
-       Optional<Brand> brandOptional = brandRepository.findById(id);
-
-       if (brandOptional.isPresent()) {
-           return brandOptional.get();
-       }else {
-           throw new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand not found with id: %d", id));
-       }
+    public Brand getById(Integer id) throws ServiceException {
+      return brandRepository.findById(id)
+               .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND , String.format("brand not found for id=%d", id)));
+        //ServiceException: have 2 = check, uncheck
+//       if (brandOptional.isPresent()) {
+//           return brandOptional.get();
+//       }else {
+//           throw new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand not found with id: %d", id));
+//       }
     }
 
     @Override
     public List<Brand> getAllBrand() {
+
         return brandRepository.findAll();
     }
 
     @Override
-    public Brand update(Integer id, BrandDTO dto) {
+    public Brand update(Integer id, BrandDTO dto) throws ServiceException {
         Brand brand = getById(id);
         brand.setName(dto.getName());
         brandRepository.save(brand);
@@ -58,7 +58,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws ServiceException {
         Brand brand = getById(id);
         brandRepository.delete(brand);
         log.info("Brand with id: %d deleted".formatted(id));
