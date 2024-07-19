@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
 
     public ResponseEntity<?> handleHttpClientError(ServiceException e) {
-        //@TODO customize respond dto message
-        return ResponseEntity.status(e.getStatus()).body(e);
+        ErrorResponse errorResponse = new ErrorResponse(e.getStatus().getReasonPhrase(), e.getMessage());
+        return ResponseEntity.status(e.getStatus()).body(errorResponse);
     }
 }

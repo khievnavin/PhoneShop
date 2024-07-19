@@ -5,6 +5,6 @@ import com.product.phoneshop.model.Model;
 
 public interface ModelService {
 
-    Model save(Model dto) throws  SecurityException;
-    Model getById(Integer id) throws ServiceException;
+    Model save(Model dto) ;
+    Model getById(Integer id) ;
 }

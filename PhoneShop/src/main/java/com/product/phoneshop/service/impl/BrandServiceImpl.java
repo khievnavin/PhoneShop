@@ -31,9 +31,9 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand getById(Integer id) throws ServiceException {
+    public Brand getById(Integer id){
       return brandRepository.findById(id)
-               .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND , String.format("brand not found for id=%d", id)));
+               .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND , String.format("brand not found for id= %d", id)));
         //ServiceException: have 2 = check, uncheck
 //       if (brandOptional.isPresent()) {
 //           return brandOptional.get();
@@ -49,7 +49,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand update(Integer id, BrandDTO dto) throws ServiceException {
+    public Brand update(Integer id, BrandDTO dto){
         Brand brand = getById(id);
         brand.setName(dto.getName());
         brandRepository.save(brand);
@@ -57,7 +57,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public void delete(Integer id) throws ServiceException {
+    public void delete(Integer id) {
         Brand brand = getById(id);
         brandRepository.delete(brand);
         log.info("Brand with id: %d deleted".formatted(id));

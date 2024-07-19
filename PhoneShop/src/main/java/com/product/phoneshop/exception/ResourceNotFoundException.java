@@ -12,6 +12,6 @@ public class ResourceNotFoundException extends ServiceException{
     private Integer resourceId;
 
     public ResourceNotFoundException( String resourceName , Integer resourceId) {
-        super(HttpStatus.NOT_FOUND,String.format(" %s not found for id=%d",resourceName ,resourceId));
+        super(HttpStatus.NOT_FOUND,String.format("%s not found for id= %d",resourceName ,resourceId));
     }
 }

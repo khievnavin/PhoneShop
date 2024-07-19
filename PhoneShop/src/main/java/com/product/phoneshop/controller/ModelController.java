@@ -27,6 +27,7 @@ public class ModelController {
 
     @GetMapping("{id}")
     public ResponseEntity<?> getById(@PathVariable("id") int id) throws ServiceException {
-        return ResponseEntity.ok(modelService.getById(id));
+        ModelDTO model = modelMapper.toDTO(modelService.getById(id));
+        return ResponseEntity.ok(model);
     }
 }

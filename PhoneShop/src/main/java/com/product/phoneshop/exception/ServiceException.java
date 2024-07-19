@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServiceException extends  Exception {
+public class ServiceException extends  RuntimeException  {
     /**
      *
      * */

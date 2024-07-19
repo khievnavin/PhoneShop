@@ -6,7 +6,6 @@ import com.product.phoneshop.model.Model;
 import com.product.phoneshop.repository.ModelRepository;
 import com.product.phoneshop.service.ModelService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +19,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public Model getById(Integer id) throws ServiceException {
+    public Model getById(Integer id)  {
         return modelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Model" , id));
 
