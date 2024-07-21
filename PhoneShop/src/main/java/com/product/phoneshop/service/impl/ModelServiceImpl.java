@@ -1,20 +1,16 @@
 package com.product.phoneshop.service.impl;
 
 import com.product.phoneshop.exception.ResourceNotFoundException;
-import com.product.phoneshop.exception.ServiceException;
 import com.product.phoneshop.model.Model;
 import com.product.phoneshop.repository.ModelRepository;
 import com.product.phoneshop.service.ModelService;
 import com.product.phoneshop.spec.ModelFilter;
 import com.product.phoneshop.spec.ModelSpec;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import com.product.phoneshop.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.MapUtils;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +35,31 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    public Page<Model> getModels(Map<String, String> params) {
+       // Pageable pageable = PageRequest.of(PageUtils.PAGE_NUMBER_DEFAULT,PageUtils.PAGE_SIZE_DEFAULT);
+        Pageable pageable = PageUtils.getPageable(params);
+
+        ModelFilter modelFilter = new ModelFilter();
+
+        if(params.containsKey("modelId")) {
+            modelFilter.setModelId(MapUtils.getInteger(params, "modelId"));
+        }
+        if(params.containsKey("modelName")) {
+            modelFilter.setModelName(MapUtils.getString(params, "modelName"));
+        }
+        if(params.containsKey("brandId")) {
+            modelFilter.setBrandId(MapUtils.getInteger(params, "brandId"));
+        }
+        if(params.containsKey("brandName")) {
+            modelFilter.setBrandName(MapUtils.getString(params, "brandName"));
+        }
+        ModelSpec modelSpec = new ModelSpec(modelFilter);
+        Page<Model> page = modelRepository.findAll(modelSpec, pageable);
+        return page;
+    }
+
+  /*
+    //@Override
     public List<Model> getModels(Map<String, String> params) {
         ModelFilter modelFilter = new ModelFilter();
         if(params.containsKey("modelId")) {
@@ -56,8 +77,9 @@ public class ModelServiceImpl implements ModelService {
         ModelSpec modelSpec = new ModelSpec(modelFilter);
         return modelRepository.findAll(modelSpec, Sort.by(Sort.Order.asc("id")));
     }
-    //Get All
-  //  @Override
+    */
+  //Get All
+  /*  @Override
     public List<Model> getModelsOld(Map<String, String> params) {
        // params.containsKey("name");
         Specification<Model> specification = new Specification<Model>() {
@@ -75,5 +97,5 @@ public class ModelServiceImpl implements ModelService {
         };
 
         return modelRepository.findAll(specification , Sort.by(Sort.Order.asc("id")));
-    }
+    }*/
 }

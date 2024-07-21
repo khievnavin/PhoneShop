@@ -3,7 +3,6 @@ package com.product.phoneshop.controller;
 
 import com.product.phoneshop.exception.ServiceException;
 import com.product.phoneshop.mapper.ModelMapper;
-import com.product.phoneshop.model.Brand;
 import com.product.phoneshop.model.Model;
 import com.product.phoneshop.service.ModelService;
 import com.product.phoneshop.service.dto.ModelDTO;
