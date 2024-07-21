@@ -8,26 +8,24 @@ import com.product.phoneshop.service.BrandService;
 import com.product.phoneshop.service.dto.BrandDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 //business logic
 @Slf4j
 @Service
 @RequiredArgsConstructor
+
 public class BrandServiceImpl implements BrandService {
 
+    @Autowired
     private final BrandRepository brandRepository;
-    private final BrandMapper brandMapper;
 
     @Override
-    public Brand save(BrandDTO brandDTO){
-
-        Brand brand = brandMapper.toEntity(brandDTO);
-
-        return brandRepository.save(brand);
+    public Brand save(Brand entity) {
+        return brandRepository.save(entity);
     }
 
     @Override
@@ -44,7 +42,6 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public List<Brand> getAllBrand() {
-
         return brandRepository.findAll();
     }
 
