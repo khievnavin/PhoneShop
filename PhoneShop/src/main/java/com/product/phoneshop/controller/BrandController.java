@@ -31,6 +31,7 @@ public class BrandController {
         return ResponseEntity.ok(brandService.getById(id));
     }
 
+    //GetAll
     @GetMapping
     public ResponseEntity<List<BrandDTO>> getAll() {
 

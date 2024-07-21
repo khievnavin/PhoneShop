@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/models")
@@ -29,5 +31,10 @@ public class ModelController {
     public ResponseEntity<?> getById(@PathVariable("id") int id) throws ServiceException {
         ModelDTO model = modelMapper.toDTO(modelService.getById(id));
         return ResponseEntity.ok(model);
+    }
+
+    @GetMapping
+    public  ResponseEntity<?> getModelList(@RequestParam Map<String, String> params){
+        return ResponseEntity.ok(modelService.getModels(params));
     }
 }
