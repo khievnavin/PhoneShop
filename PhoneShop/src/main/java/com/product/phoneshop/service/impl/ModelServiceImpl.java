@@ -21,6 +21,7 @@ import java.util.Map;
 public class ModelServiceImpl implements ModelService {
 
     private final ModelRepository modelRepository;
+
     @Override
     public Model save(Model entity) {
         return modelRepository.save(entity);
@@ -54,8 +55,8 @@ public class ModelServiceImpl implements ModelService {
             modelFilter.setBrandName(MapUtils.getString(params, "brandName"));
         }
         ModelSpec modelSpec = new ModelSpec(modelFilter);
-        Page<Model> page = modelRepository.findAll(modelSpec, pageable);
-        return page;
+
+        return modelRepository.findAll(modelSpec, pageable);
     }
 
   /*

@@ -3,10 +3,13 @@ package com.product.phoneshop.controller;
 
 import com.product.phoneshop.exception.ServiceException;
 import com.product.phoneshop.mapper.ModelMapper;
+import com.product.phoneshop.mapper.PageMapper;
 import com.product.phoneshop.model.Model;
 import com.product.phoneshop.service.ModelService;
 import com.product.phoneshop.service.dto.ModelDTO;
+import com.product.phoneshop.service.dto.PageDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +36,11 @@ public class ModelController {
     }
 
     @GetMapping
-    public  ResponseEntity<?> getModelList(@RequestParam Map<String, String> params){
-        return ResponseEntity.ok(modelService.getModels(params));
+    public ResponseEntity<?> getModelList(@RequestParam Map<String, String> params){
+        Page<Model> page = modelService.getModels(params);
+
+        PageDTO dto = PageMapper.INSTANCE.toDTO(page);
+        dto.setList(page.get().map(modelMapper.INSTANCE::toDTO).toList());
+        return ResponseEntity.ok(dto);
     }
 }

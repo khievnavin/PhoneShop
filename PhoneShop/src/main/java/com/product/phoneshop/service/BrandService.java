@@ -11,7 +11,7 @@ import java.util.List;
 public interface BrandService {
     Brand save(Brand entity);
     Brand getById(Integer id) ;
-    List<Brand> getAllBrand();
-    Brand update(Integer id, BrandDTO dto);
+    Brand update(Integer id, Brand brand);
     void delete(Integer id);
+    List<Brand> getAllBrand();
 }

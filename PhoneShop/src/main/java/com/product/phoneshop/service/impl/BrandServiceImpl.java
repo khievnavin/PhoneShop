@@ -1,13 +1,12 @@
 package com.product.phoneshop.service.impl;
 
 import com.product.phoneshop.exception.ServiceException;
-import com.product.phoneshop.mapper.BrandMapper;
 import com.product.phoneshop.model.Brand;
 import com.product.phoneshop.repository.BrandRepository;
 import com.product.phoneshop.service.BrandService;
-import com.product.phoneshop.service.dto.BrandDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand save(Brand entity) {
+
         return brandRepository.save(entity);
     }
 
@@ -46,11 +46,13 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand update(Integer id, BrandDTO dto){
-        Brand brand = getById(id);
-        brand.setName(dto.getName());
-        brandRepository.save(brand);
-        return brand;
+    public Brand update(Integer id, Brand source){
+        Brand target = getById(id);
+        //brand.setName(dto.getName());
+        //BrandMapper.INSTANCE.update(target,source);
+        target.setName(source.getName());
+        //BeanUtils.copyProperties(source, target , "id");
+        return brandRepository.save(target);
     }
 
     @Override

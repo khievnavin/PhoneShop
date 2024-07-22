@@ -6,8 +6,6 @@ import com.product.phoneshop.model.Brand;
 import com.product.phoneshop.service.BrandService;
 import com.product.phoneshop.service.dto.BrandDTO;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +17,6 @@ import java.util.List;
 
 public class BrandController {
     private final BrandService brandService;
-    private  BrandMapper brandMapper;
 
 
     @PostMapping
@@ -40,15 +37,16 @@ public class BrandController {
 
         List<BrandDTO> listBrand = brandService.getAllBrand()
                 .stream()
-                .map(brandMapper::toDTO)
+                .map(BrandMapper.INSTANCE::toDTO)
                 .toList(); //from java 16 //collect only list
         //   .collect(Collectors.toList()); //collect for all
         return ResponseEntity.ok(listBrand);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Brand> update(@PathVariable("id") int id, @RequestBody BrandDTO brandDTO) throws ServiceException {
-        return ResponseEntity.ok(brandService.update(id, brandDTO));
+    public ResponseEntity<Brand> update(@PathVariable("id") Integer id, @RequestBody BrandDTO brandDTO) throws ServiceException {
+        Brand brand = BrandMapper.INSTANCE.toEntity(brandDTO);
+        return ResponseEntity.ok(brandService.update(id, brand));
     }
 
     @DeleteMapping("{id}")
