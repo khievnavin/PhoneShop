@@ -1,7 +1,6 @@
 package com.product.phoneshop.service;
 
 import com.product.phoneshop.model.Brand;
-import com.product.phoneshop.service.dto.BrandDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

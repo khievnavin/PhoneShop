@@ -40,26 +40,10 @@ public class BrandServiceTest {
 //        Brand brand  = new Brand();
 //        brand.setName("Apple");
 //         when:
-        /*
-        when(brandRepository.save(any(Brand.class))).thenAnswer(new Answer<Brand>() {
 
-            @Override
-            public Brand answer(InvocationOnMock invocationOnMock) throws Throwable {
-                Brand brandEntity = invocationOnMock.getArgument(0);
-                brandEntity.setId(1);
-                return brandEntity;
-            }
-        });
-        //
-        when(brandRepository.save(any(Brand.class))).thenAnswer(invocationOnMock -> {
-            Brand brandEntity = invocationOnMock.getArgument(0);
-            brandEntity.setId(1);
-            return brandEntity;
-        });
-         */
         // then:
         Brand brandReturn = brandService.save(brand);
-       // verify(brandRepository,times(1)).save(brand);
+        verify(brandRepository,times(1)).save(brand);
 //        assertEquals("Apple", brandReturn.getName());
 //        assertEquals(1, brandReturn.getId());
     }

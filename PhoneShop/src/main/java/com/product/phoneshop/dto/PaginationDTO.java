@@ -1,4 +1,4 @@
-package com.product.phoneshop.service.dto;
+package com.product.phoneshop.dto;
 
 import lombok.Builder;
 import lombok.Data;

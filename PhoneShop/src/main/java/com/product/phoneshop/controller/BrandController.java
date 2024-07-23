@@ -4,7 +4,7 @@ import com.product.phoneshop.exception.ServiceException;
 import com.product.phoneshop.mapper.BrandMapper;
 import com.product.phoneshop.model.Brand;
 import com.product.phoneshop.service.BrandService;
-import com.product.phoneshop.service.dto.BrandDTO;
+import com.product.phoneshop.dto.BrandDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/brands")
 @RequiredArgsConstructor
-
 public class BrandController {
-    private final BrandService brandService;
 
+    private final BrandService brandService;
 
     @PostMapping
     public ResponseEntity<Brand> create(@RequestBody BrandDTO brandDTO) {

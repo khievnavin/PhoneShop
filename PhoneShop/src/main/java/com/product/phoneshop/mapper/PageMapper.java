@@ -1,7 +1,7 @@
 package com.product.phoneshop.mapper;
 
-import com.product.phoneshop.service.dto.PageDTO;
-import com.product.phoneshop.service.dto.PaginationDTO;
+import com.product.phoneshop.dto.PageDTO;
+import com.product.phoneshop.dto.PaginationDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

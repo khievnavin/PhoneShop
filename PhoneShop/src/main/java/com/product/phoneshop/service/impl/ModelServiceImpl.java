@@ -32,7 +32,6 @@ public class ModelServiceImpl implements ModelService {
     public Model getById(Integer id)  {
         return modelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Model" , id));
-
     }
 
     @Override
@@ -59,6 +58,7 @@ public class ModelServiceImpl implements ModelService {
         return modelRepository.findAll(modelSpec, pageable);
     }
 
+  //Get Models
   /*
     //@Override
     public List<Model> getModels(Map<String, String> params) {

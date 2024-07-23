@@ -6,8 +6,8 @@ import com.product.phoneshop.mapper.ModelMapper;
 import com.product.phoneshop.mapper.PageMapper;
 import com.product.phoneshop.model.Model;
 import com.product.phoneshop.service.ModelService;
-import com.product.phoneshop.service.dto.ModelDTO;
-import com.product.phoneshop.service.dto.PageDTO;
+import com.product.phoneshop.dto.ModelDTO;
+import com.product.phoneshop.dto.PageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +22,13 @@ public class ModelController {
 
     private final ModelService modelService;
     private final ModelMapper modelMapper;
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ModelDTO dto) throws SecurityException {
         Model model = modelMapper.toModel(dto);
         ModelDTO modelDTO = modelMapper.toDTO(modelService.save(model));
         return ResponseEntity.ok(modelDTO);
     }
-
     @GetMapping("{id}")
     public ResponseEntity<?> getById(@PathVariable("id") int id) throws ServiceException {
         ModelDTO model = modelMapper.toDTO(modelService.getById(id));
