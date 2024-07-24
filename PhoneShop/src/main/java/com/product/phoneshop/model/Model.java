@@ -1,6 +1,7 @@
 package com.product.phoneshop.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 //work with jpa
@@ -11,7 +12,7 @@ public class Model {
     @Id
     @GeneratedValue(generator = "model_seq_generator")
     @SequenceGenerator(name = "model_seq_generator", initialValue = 1, sequenceName = "model_seq")
-    private Integer id;
+    private Long id;
 
     @Column(name = "model_name") //for custom name table
     private String name;
@@ -19,4 +20,8 @@ public class Model {
     @ManyToOne(fetch = FetchType.EAGER) //Lazy for want to know about info not early repaid , Eager repaid
     @JoinColumn(name = "brand_id") //for custom name table
     private Brand brand;
+
+    @NotNull
+    @Column(name = "year_made")
+    private Short yearMade;
 }

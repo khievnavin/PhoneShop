@@ -30,7 +30,7 @@ public class ModelController {
         return ResponseEntity.ok(modelDTO);
     }
     @GetMapping("{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") int id) throws ServiceException {
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) throws ServiceException {
         ModelDTO model = modelMapper.toDTO(modelService.getById(id));
         return ResponseEntity.ok(model);
     }

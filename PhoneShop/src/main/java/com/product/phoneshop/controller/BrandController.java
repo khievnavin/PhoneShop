@@ -26,7 +26,7 @@ public class BrandController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Brand> getById(@PathVariable("id") int id) throws ServiceException {
+    public ResponseEntity<Brand> getById(@PathVariable("id") Long id) throws ServiceException {
         return ResponseEntity.ok(brandService.getById(id));
     }
 
@@ -43,13 +43,13 @@ public class BrandController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Brand> update(@PathVariable("id") Integer id, @RequestBody BrandDTO brandDTO) throws ServiceException {
+    public ResponseEntity<Brand> update(@PathVariable("id") Long id, @RequestBody BrandDTO brandDTO) throws ServiceException {
         Brand brand = BrandMapper.INSTANCE.toEntity(brandDTO);
         return ResponseEntity.ok(brandService.update(id, brand));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Brand> delete(@PathVariable("id") int id) throws ServiceException {
+    public ResponseEntity<Brand> delete(@PathVariable("id") Long id) throws ServiceException {
         brandService.delete(id);
         return ResponseEntity.ok().build();
     }

@@ -15,4 +15,5 @@ public class ModelDTO {
     private String name;
     private  Integer brandId;
     //private BrandDTO brandDTO;
+    private  Integer yearMade;
 }

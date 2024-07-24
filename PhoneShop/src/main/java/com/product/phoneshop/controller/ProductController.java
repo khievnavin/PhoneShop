@@ -1,6 +1,6 @@
 package com.product.phoneshop.controller;
 
-import com.product.phoneshop.dto.ProductDTO;
+import com.product.phoneshop.dto.ProductImportDTO;
 import com.product.phoneshop.mapper.ProductMapper;
 import com.product.phoneshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<?> createProduct(@RequestBody ProductDTO dto) {
+    public ResponseEntity<?> createProduct(@RequestBody ProductImportDTO dto) {
         return ResponseEntity.ok(productMapper.toDTO(productService.save(dto)));
     }
 }

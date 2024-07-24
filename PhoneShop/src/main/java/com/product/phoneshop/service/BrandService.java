@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface BrandService {
     Brand save(Brand entity);
-    Brand getById(Integer id) ;
-    Brand update(Integer id, Brand brand);
-    void delete(Integer id);
+    Brand getById(Long id) ;
+    Brand update(Long id, Brand brand);
+    void delete(Long id);
     List<Brand> getAllBrand();
 }

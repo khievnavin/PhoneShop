@@ -24,12 +24,11 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand save(Brand entity) {
-
         return brandRepository.save(entity);
     }
 
     @Override
-    public Brand getById(Integer id){
+    public Brand getById(Long id){
       return brandRepository.findById(id)
                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND , String.format("brand not found for id= %d", id)));
         //ServiceException: have 2 = check, uncheck
@@ -42,11 +41,11 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public List<Brand> getAllBrand() {
-        return brandRepository.findAll();
+        return brandRepository.findByActiveTrue();
     }
 
     @Override
-    public Brand update(Integer id, Brand source){
+    public Brand update(Long id, Brand source){
         Brand target = getById(id);
         //brand.setName(dto.getName());
         //BrandMapper.INSTANCE.update(target,source);
@@ -56,9 +55,11 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         Brand brand = getById(id);
-        brandRepository.delete(brand);
+        brand.setActive(false);
+        brandRepository.save(brand);
+        //brandRepository.delete(brand);
         log.info("Brand with id: %d deleted".formatted(id));
     }
 }

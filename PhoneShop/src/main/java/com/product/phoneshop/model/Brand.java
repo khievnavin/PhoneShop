@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table (name = "brands")
+@Table(name = "brands")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 public class Brand {
     @Id
     @GeneratedValue(generator = "brand_seq_generator")
-    @SequenceGenerator(name = "brand_seq_generator" , initialValue = 1, sequenceName = "brand_seq")
-    private Integer id;
-
+    @SequenceGenerator(name = "brand_seq_generator", initialValue = 1, sequenceName = "brand_seq")
+    private Long id;
     private String name;
+    private Boolean active;
 }
