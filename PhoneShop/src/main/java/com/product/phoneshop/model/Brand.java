@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "brands")
+@Table(name = "brands",uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +18,8 @@ public class Brand {
     private Long id;
     private String name;
     private Boolean active;
+
+    public  Brand(String name){
+        this.name = name;
+    }
 }
