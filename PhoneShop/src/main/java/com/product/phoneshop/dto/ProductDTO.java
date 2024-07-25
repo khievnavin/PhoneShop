@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class ProductDTO {
-
     private String name;
     private Long modelId;
     private Long colorId;

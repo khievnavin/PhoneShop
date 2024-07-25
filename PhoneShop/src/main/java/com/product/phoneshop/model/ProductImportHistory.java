@@ -5,6 +5,7 @@ import jakarta.validation.constraints.DecimalMin;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,7 +22,7 @@ public class ProductImportHistory {
     private Product product;
 
     @Column(name = "date_import")
-    private LocalDateTime dateImport;
+    private LocalDate dateImport;
 
     @DecimalMin(value = "0.000001")
     @Column(name = "price_per_unit")

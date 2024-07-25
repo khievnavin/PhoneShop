@@ -1,20 +1,17 @@
-package com.product.phoneshop.model;
+package com.product.phoneshop.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "colors")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Color {
+public class ProductDisplayDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String model;
     private String color;
+    private Double salePrice;
 }
