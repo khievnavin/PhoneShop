@@ -2,9 +2,7 @@ package com.product.phoneshop.controller;
 
 import com.product.phoneshop.dto.PageDTO;
 import com.product.phoneshop.dto.PriceDTO;
-import com.product.phoneshop.dto.ProductDisplayDTO;
 import com.product.phoneshop.dto.ProductImportDTO;
-import com.product.phoneshop.mapper.PageMapper;
 import com.product.phoneshop.mapper.ProductMapper;
 import com.product.phoneshop.model.Product;
 import com.product.phoneshop.service.ProductService;

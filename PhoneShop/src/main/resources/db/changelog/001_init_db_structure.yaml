@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 001-init-db-structure
+      id: 001_int_db_structure
       author: navin
       changes:
         - createTable:
-            tableName: color
+            tableName: colors
             columns:
               - column:
                   name: id
@@ -12,12 +12,16 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
               - column:
                   name: name
                   type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
 
         - createTable:
-            tableName: roles
+            tableName: product_import_history
             columns:
               - column:
                   name: id
@@ -25,25 +29,38 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
+
+              - column:
+                  name: date_import
+                  type: date
+                  constraints:
                     nullable: false
+                    unique: true
               - column:
-                  name: date_import
-                  type: date
+                  name: import_unit
+                  type: INTEGER
               - column:
-                  name: date_import
-                  type: date
+                  name: price
+                  type: number(19,2)
+              - column:
+                  name: product_id
+                  type: BIGINT
 
         - createTable:
-            tableName: user_roles
+            tableName: products
             columns:
               - column:
-                  name: user_id
+                  name: id
                   type: BIGINT
                   constraints:
                     nullable: false
               - column:
-                  name: role_id
+                  name: available_unit
                   type: BIGINT
-                  constraints:
-                    nullable: false
+              - column:
+                  name: image_path
+                  type: VARCHAR(255)
+              - column:
+                  name: name
+                  type: VARCHAR(255)
 

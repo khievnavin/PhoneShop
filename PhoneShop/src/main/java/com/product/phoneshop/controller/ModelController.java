@@ -2,7 +2,7 @@ package com.product.phoneshop.controller;
 
 
 import com.product.phoneshop.exception.ServiceException;
-import com.product.phoneshop.mapper.ModelMapper;
+import com.product.phoneshop.mapper.ModelEntityMapper;
 import com.product.phoneshop.mapper.PageMapper;
 import com.product.phoneshop.model.Model;
 import com.product.phoneshop.service.ModelService;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class ModelController {
 
     private final ModelService modelService;
-    private final ModelMapper modelMapper;
+    private final ModelEntityMapper modelMapper;
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ModelDTO dto) throws SecurityException {

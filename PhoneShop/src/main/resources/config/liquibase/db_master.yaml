@@ -1,3 +1,0 @@
-databaseChangeLog:
-  - include:
-     file: config.liquibase/001_init_db_structure.yaml
