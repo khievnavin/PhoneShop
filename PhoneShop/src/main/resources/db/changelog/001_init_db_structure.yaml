@@ -4,63 +4,209 @@ databaseChangeLog:
       author: navin
       changes:
         - createTable:
-            tableName: colors
             columns:
               - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: brands_pkey
                   name: id
                   type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
+              - column:
+                  name: active
+                  type: BOOLEAN
               - column:
                   name: name
                   type: VARCHAR(255)
-                  constraints:
-                    nullable: false
-                    unique: true
-
+            tableName: brands
+  - changeSet:
+      id: 1722069745126-2
+      author: GOD (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: ukoce3937d2f4mpfqrycbr0l93m
+            tableName: brands
+  - changeSet:
+      id: 1722069745126-3
+      author: GOD (generated)
+      changes:
+        - createSequence:
+            cacheSize: 1
+            cycle: false
+            dataType: bigint
+            incrementBy: 50
+            maxValue: 9223372036854775807
+            minValue: 1
+            sequenceName: brand_seq
+            startValue: 1
+  - changeSet:
+      id: 1722069745126-4
+      author: GOD (generated)
+      changes:
+        - createSequence:
+            cacheSize: 1
+            cycle: false
+            dataType: bigint
+            incrementBy: 50
+            maxValue: 9223372036854775807
+            minValue: 1
+            sequenceName: model_seq
+            startValue: 1
+  - changeSet:
+      id: 1722069745126-5
+      author: GOD (generated)
+      changes:
         - createTable:
-            tableName: product_import_history
             columns:
               - column:
-                  name: id
-                  type: BIGINT
                   autoIncrement: true
                   constraints:
+                    nullable: false
                     primaryKey: true
-
+                    primaryKeyName: colors_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: color
+                  type: VARCHAR(255)
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: colors
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: models_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: model_name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: year_made
+                  type: SMALLINT
+              - column:
+                  name: brand_id
+                  type: BIGINT
+            tableName: models
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: product_import_history_pkey
+                  name: id
+                  type: BIGINT
               - column:
                   name: date_import
                   type: date
-                  constraints:
-                    nullable: false
-                    unique: true
               - column:
                   name: import_unit
                   type: INTEGER
               - column:
-                  name: price
-                  type: number(19,2)
+                  name: price_per_unit
+                  type: numeric(38, 2)
               - column:
                   name: product_id
                   type: BIGINT
-
+            tableName: product_import_history
         - createTable:
-            tableName: products
             columns:
               - column:
-                  name: id
-                  type: BIGINT
+                  autoIncrement: true
                   constraints:
                     nullable: false
+                    primaryKey: true
+                    primaryKeyName: products_pkey
+                  name: id
+                  type: BIGINT
               - column:
                   name: available_unit
-                  type: BIGINT
+                  type: INTEGER
               - column:
                   name: image_path
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(255)
+              - column:
+                  name: sale_price
+                  type: FLOAT8
+              - column:
+                  name: color_id
+                  type: BIGINT
+              - column:
+                  name: model_id
+                  type: BIGINT
+            tableName: products
+  - changeSet:
+      id: 1722069745126-9
+      author: GOD (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: model_id
+            baseTableName: products
+            constraintName: fk29c4nbv58vgu9wg14fd8ac4xy
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: models
+            validate: true
+  - changeSet:
+      id: 1722069745126-10
+      author: GOD (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: brand_id
+            baseTableName: models
+            constraintName: fk95s72g5hnsl3o0bqeuhnokdxu
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: brands
+            validate: true
+  - changeSet:
+      id: 1722069745126-11
+      author: GOD (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: color_id
+            baseTableName: products
+            constraintName: fkebociq5k3b2tkcxh3q5dg4eed
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: colors
+            validate: true
+  - changeSet:
+      id: 1722069745126-12
+      author: GOD (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: product_import_history
+            constraintName: fkh1eaksnk8cqojh8sa5fi05e8s
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: products
+            validate: true
 
