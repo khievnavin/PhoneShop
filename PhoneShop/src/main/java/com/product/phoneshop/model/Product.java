@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Table(name = "products" , uniqueConstraints = {@UniqueConstraint(columnNames = {"model_Id","year_made"})})
 @Data
 
-public class Product {
+public class Product extends AuditEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
