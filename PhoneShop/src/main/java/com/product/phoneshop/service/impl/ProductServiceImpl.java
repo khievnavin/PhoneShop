@@ -3,6 +3,7 @@ package com.product.phoneshop.service.impl;
 import com.product.phoneshop.dto.ProductDisplayDTO;
 import com.product.phoneshop.dto.ProductImportDTO;
 import com.product.phoneshop.exception.ResourceNotFoundException;
+import com.product.phoneshop.exception.ServiceException;
 import com.product.phoneshop.mapper.ProductImportHistoryMapper;
 import com.product.phoneshop.mapper.ProductMapper;
 import com.product.phoneshop.model.Color;
@@ -19,8 +20,10 @@ import com.product.phoneshop.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product setPrice(Long productId, Double price) {
+    public Product setPrice(Long productId, BigDecimal price) {
         //check if product exit , get product
         Product product = getById(productId);
         //update price
@@ -97,7 +100,7 @@ public class ProductServiceImpl implements ProductService {
 
         Map<Long, String> colorMap = colors.stream().collect(Collectors.toMap(
                 Color::getId,
-                Color::getColor
+                Color::getName
         ));
 
 
@@ -111,5 +114,23 @@ public class ProductServiceImpl implements ProductService {
             displayDTOs.add(dto);
         }
         return displayDTOs;
+    }
+
+    @Override
+    public boolean hasAvailableUnit(Long productId, Integer orderUnit) {
+        Product product = getById(productId);
+        if (product.getAvailableUnit() < orderUnit) {
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "Product (%s) with id: %s has no available unit".formatted(product.getName(), productId)) ;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean salePriceIsSet(Long productId) {
+        Product product = getById(productId);
+        if (Objects.isNull(product.getSalePrice())){ //or product.getSalePrice() == null
+            throw new ServiceException(HttpStatus.BAD_REQUEST, "Product (%s) with id: %s haven't price yet".formatted(product.getName(), productId)) ;
+        }
+        return false;
     }
 }

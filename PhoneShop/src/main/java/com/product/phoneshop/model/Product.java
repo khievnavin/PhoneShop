@@ -28,7 +28,7 @@ public class Product {
     private Color color;
 
     @Column(name = "sale_price")
-    private Double salePrice;
+    private BigDecimal salePrice;
 
     @Column(name = "available_unit")
     private Integer availableUnit; //TODO should move to Stock to table? reason?

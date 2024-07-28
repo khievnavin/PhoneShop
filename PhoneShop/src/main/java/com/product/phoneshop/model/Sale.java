@@ -1,10 +1,7 @@
 package com.product.phoneshop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Data
@@ -14,6 +11,9 @@ import java.time.LocalDateTime;
 public class Sale {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime soleDate;
+
+    @JoinColumn(name = "sole_date")
+    private LocalDateTime soldDate;
 }

@@ -10,5 +10,5 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PriceDTO {
-    private Double salePrice;
+    private BigDecimal salePrice;
 }
