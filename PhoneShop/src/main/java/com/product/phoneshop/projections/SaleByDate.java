@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public interface SaleByDate {
 
-    LocalDate getLSoldDate();
+    LocalDate getSoldDate();
 
     Long getProductId();
 
