@@ -29,27 +29,33 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
-
+        http.csrf(csrf -> csrf.disable()) // Disable CSRF protection
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/index", "/home", "css/**", "js/**", "/error").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/brands/*").hasAnyAuthority(PermissionEnum.BRAND_READ.getDescription(), PermissionEnum.BRAND_WRITE.getDescription())
+                        .requestMatchers(HttpMethod.GET, "/brands/*").hasAuthority(PermissionEnum.BRAND_READ.getDescription())
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(withDefaults());
         return http.build();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        //UserDetails
-//        //User navin = new User("navin", passwordEncoder.encode("navin123"), Collections.emptyList());
-//        UserDetails navin = User.builder()
-//                .username("navin")
-//                .password(passwordEncoder.encode("navin123"))
-//                .authorities(PermissionEnum.BRAND_READ.getDescription()) //.roles("ADMIN") //ROLE_ADMIN
-//                .build();
-//
-//        UserDetails savin = User.builder()
-//                .username("savin")
-//                .password(passwordEncoder.encode("navin123"))
-//                .authorities(PermissionEnum.BRAND_READ.getDescription())//.roles("SALE") //ROLE_SALE
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(navin,savin);
-//    }
+    @Bean
+    public UserDetailsService userDetailsService() {
+        //UserDetails
+        //User navin = new User("navin", passwordEncoder.encode("navin123"), Collections.emptyList());
+        UserDetails navin = User.builder()
+                .username("navin")
+                .password(passwordEncoder.encode("navin123"))
+                .authorities(RoleEnum.ADMIN.getAuthorities()) //.roles("ADMIN") //ROLE_ADMIN
+                .build();
+
+        UserDetails savin = User.builder()
+                .username("savin")
+                .password(passwordEncoder.encode("navin123"))
+                .authorities(RoleEnum.SALE.getAuthorities())//.roles("SALE") //ROLE_SALE
+                .build();
+
+        return new InMemoryUserDetailsManager(navin,savin);
+    }
 }

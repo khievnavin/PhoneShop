@@ -24,12 +24,11 @@ public enum RoleEnum{
 //    }
 
     public Set<SimpleGrantedAuthority> getAuthorities() {
-           Set<SimpleGrantedAuthority> permissions = this
-                .getPermissions()
-                .stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.getDescription()))
-                .collect(Collectors.toSet());
 
-        return permissions;
+        return this
+             .getPermissions()
+             .stream()
+             .map(permission -> new SimpleGrantedAuthority(permission.getDescription()))
+             .collect(Collectors.toSet());
     }
 }
