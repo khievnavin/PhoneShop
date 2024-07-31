@@ -27,47 +27,29 @@ public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
 
     @Bean
-    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(
-
-                authorize -> {
-                    authorize.requestMatchers("/", "/index", "/home", "css/**", "js/**").permitAll();
-                    //PERMISSION
-                    authorize.requestMatchers(HttpMethod.POST, "/brands/*").hasAnyAuthority(PermissionEnum.BRAND_READ.getDescription(), PermissionEnum.BRAND_WRITE.getDescription());
-                    authorize.requestMatchers(HttpMethod.GET, "/brands/*").hasAuthority(PermissionEnum.BRAND_READ.getDescription());
-                    authorize.anyRequest().authenticated();
-                }
-        );
-        http.httpBasic(withDefaults());
+        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
 
         return http.build();
     }
 
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .requestMatchers("/","/index","/home","css/**","js/**").permitAll()
-//                .anyRequest()
-//                .authenticated();
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        //UserDetails
+//        //User navin = new User("navin", passwordEncoder.encode("navin123"), Collections.emptyList());
+//        UserDetails navin = User.builder()
+//                .username("navin")
+//                .password(passwordEncoder.encode("navin123"))
+//                .authorities(PermissionEnum.BRAND_READ.getDescription()) //.roles("ADMIN") //ROLE_ADMIN
+//                .build();
 //
+//        UserDetails savin = User.builder()
+//                .username("savin")
+//                .password(passwordEncoder.encode("navin123"))
+//                .authorities(PermissionEnum.BRAND_READ.getDescription())//.roles("SALE") //ROLE_SALE
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(navin,savin);
 //    }
-
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        //UserDetails
-        //User navin = new User("navin", passwordEncoder.encode("navin123"), Collections.emptyList());
-        UserDetails navin = User.builder()
-                .username("navin")
-                .password(passwordEncoder.encode("navin123"))
-                .authorities(PermissionEnum.BRAND_WRITE.getDescription()) //.roles("ADMIN") //ROLE_ADMIN
-                .build();
-
-        UserDetails savin = User.builder()
-                .username("savin")
-                .password(passwordEncoder.encode("navin123"))
-                .authorities(PermissionEnum.BRAND_READ.getDescription())//.roles("SALE") //ROLE_SALE
-                .build();
-
-        return new InMemoryUserDetailsManager(navin,savin);
-    }
 }
