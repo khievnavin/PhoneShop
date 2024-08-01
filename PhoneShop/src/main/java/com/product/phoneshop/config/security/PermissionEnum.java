@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 
-
 public enum PermissionEnum {
     BRAND_READ("brand:read"),
     BRAND_WRITE("brand:write");

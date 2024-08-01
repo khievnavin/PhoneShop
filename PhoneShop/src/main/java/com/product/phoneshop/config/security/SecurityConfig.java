@@ -1,5 +1,6 @@
 package com.product.phoneshop.config.security;
 
+import com.product.phoneshop.config.security.jwt.JwtLoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,21 +22,23 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @RequiredArgsConstructor
 
 public class SecurityConfig {
-
     private final PasswordEncoder passwordEncoder;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
+                .addFilter(new JwtLoginFilter(null))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/index", "/home", "css/**", "js/**", "/error").permitAll()
                         .requestMatchers("/models").hasRole("SALE")
                         .requestMatchers(HttpMethod.POST, "/brands").hasAuthority(PermissionEnum.BRAND_WRITE.getDescription())
                         .requestMatchers(HttpMethod.GET , "/brands").hasAuthority(PermissionEnum.BRAND_READ.getDescription())
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(withDefaults());
+                        .anyRequest()
+                        .authenticated()
+                );
+               // .httpBasic(withDefaults());
         return http.build();
     }
 
