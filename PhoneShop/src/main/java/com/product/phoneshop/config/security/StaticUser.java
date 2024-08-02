@@ -1,11 +1,13 @@
 package com.product.phoneshop.config.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+@Primary
 @Service
 @RequiredArgsConstructor
 public class StaticUser implements ApplicationUserService {
