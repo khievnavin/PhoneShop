@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Primary
+//@Primary
 @Service
 @RequiredArgsConstructor
 public class StaticUser implements ApplicationUserService {

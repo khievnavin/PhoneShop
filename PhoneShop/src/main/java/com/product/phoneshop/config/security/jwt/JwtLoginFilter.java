@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @RequiredArgsConstructor
-@EnableWebSecurity
+//@EnableWebSecurity
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
@@ -49,9 +49,10 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             throws IOException, ServletException {
         //read documents
         String secretKey = "wehw76e56fw3ef@w123739231515941312@!!@DVD#@#32CDD23";
+
         String token = Jwts.builder()
                         .setSubject(authResult.getName())
-                        .claim("authorities", authResult.getAuthorities())
+                        .claim("authorities" , authResult.getAuthorities())
                         .setIssuedAt(new Date())
                         .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusMonths(1)))
                         .setIssuer("phoneshop.com")

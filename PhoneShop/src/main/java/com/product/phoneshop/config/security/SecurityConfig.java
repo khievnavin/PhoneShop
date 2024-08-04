@@ -1,15 +1,14 @@
 package com.product.phoneshop.config.security;
 
 import com.product.phoneshop.config.security.jwt.JwtLoginFilter;
+import com.product.phoneshop.config.security.jwt.TokenVerifyFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,8 +23,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class SecurityConfig {
+
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
     private final AuthenticationConfiguration authenticationConfiguration;
@@ -35,6 +35,7 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
                 .addFilter(new JwtLoginFilter(authenticationManager(authenticationConfiguration)))
+                .addFilterAfter(new TokenVerifyFilter(), JwtLoginFilter.class)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
@@ -49,10 +50,11 @@ public class SecurityConfig {
        return http.build();
     }
 
-//    @Autowired
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-//        auth.authenticationProvider(getAuthenticationProvider(authenticationConfiguration));
-//    }
+/*    @Autowired
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.authenticationProvider(getAuthenticationProvider(authenticationConfiguration));
+    }
+*/
 
     @Bean
     public AuthenticationProvider getAuthenticationProvider() {

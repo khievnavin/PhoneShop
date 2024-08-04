@@ -24,7 +24,10 @@ public class User {
     private Boolean isCredentialsNonExpired;
     private Boolean isEnabled;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
+
+//    @OneToMany(fetch = FetchType.EAGER)
+//    private Set<Role> roles;
 
 }
