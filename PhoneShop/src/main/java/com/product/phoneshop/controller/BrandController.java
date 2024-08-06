@@ -7,6 +7,7 @@ import com.product.phoneshop.service.BrandService;
 import com.product.phoneshop.dto.BrandDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class BrandController {
 
     private final BrandService brandService;
 
+    @PreAuthorize("hasAuthority('brand:write')") //,'brand:read','ROLE_ADMIN'
     @PostMapping
     public ResponseEntity<Brand> create(@RequestBody BrandDTO brandDTO) {
        Brand brand = BrandMapper.INSTANCE.toEntity(brandDTO);
@@ -31,9 +33,9 @@ public class BrandController {
     }
 
     //GetAll
+    @PreAuthorize("hasAuthority('brand:read')")
     @GetMapping
     public ResponseEntity<List<BrandDTO>> getAll() {
-
         List<BrandDTO> listBrand = brandService.getAllBrand()
                 .stream()
                 .map(BrandMapper.INSTANCE::toDTO)

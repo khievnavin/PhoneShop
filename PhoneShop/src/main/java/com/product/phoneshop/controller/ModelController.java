@@ -8,9 +8,11 @@ import com.product.phoneshop.model.Model;
 import com.product.phoneshop.service.ModelService;
 import com.product.phoneshop.dto.ModelDTO;
 import com.product.phoneshop.dto.PageDTO;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -35,6 +37,8 @@ public class ModelController {
         return ResponseEntity.ok(model);
     }
 
+    //@PreAuthorize("hasRole('ROLE_SALE')")
+    @RolesAllowed("ROLE_SALE")
     @GetMapping
     public ResponseEntity<?> getModelList(@RequestParam Map<String, String> params){
         Page<Model> page = modelService.getModels(params);

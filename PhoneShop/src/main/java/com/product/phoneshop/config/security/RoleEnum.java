@@ -4,8 +4,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import static com.product.phoneshop.config.security.PermissionEnum.*;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,10 +15,6 @@ public enum RoleEnum {
     SALE(Set.of(PermissionEnum.BRAND_READ));
 
     private final Set<PermissionEnum> permissions;
-
-//    RoleEnum(Set<PermissionEnum> permissions) {
-//        this.permissions = permissions;
-//    }
 
     public Set<SimpleGrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> permissions = this.permissions.stream()

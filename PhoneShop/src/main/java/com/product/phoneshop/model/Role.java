@@ -14,6 +14,6 @@ public class Role {
     private Long id;
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Permission> permissions;
 }
