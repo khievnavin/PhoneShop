@@ -2,13 +2,20 @@ package com.product.phoneshop.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.executable.ValidateOnExecution;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products" , uniqueConstraints = {@UniqueConstraint(columnNames = {"model_Id","year_made"})})
 @Data
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product extends AuditEntity{
 
     @Id

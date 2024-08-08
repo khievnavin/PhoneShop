@@ -2,7 +2,9 @@ package com.product.phoneshop.service.impl;
 
 import com.product.phoneshop.exception.ResourceNotFoundException;
 import com.product.phoneshop.model.Model;
+import com.product.phoneshop.repository.BrandRepository;
 import com.product.phoneshop.repository.ModelRepository;
+import com.product.phoneshop.service.BrandService;
 import com.product.phoneshop.service.ModelService;
 import com.product.phoneshop.spec.ModelFilter;
 import com.product.phoneshop.spec.ModelSpec;
@@ -21,6 +23,7 @@ import java.util.Map;
 public class ModelServiceImpl implements ModelService {
 
     private final ModelRepository modelRepository;
+    private final BrandService brandService;
 
     @Override
     public Model save(Model entity) {

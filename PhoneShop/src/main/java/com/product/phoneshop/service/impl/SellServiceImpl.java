@@ -2,6 +2,7 @@ package com.product.phoneshop.service.impl;
 
 import com.product.phoneshop.dto.ProductOrderDTO;
 import com.product.phoneshop.dto.SaleDTO;
+import com.product.phoneshop.exception.ResourceNotFoundException;
 import com.product.phoneshop.mapper.SaleMapper;
 import com.product.phoneshop.model.Product;
 import com.product.phoneshop.model.Sale;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,5 +60,41 @@ public class SellServiceImpl implements SellService {
             product.setAvailableUnit(product.getAvailableUnit() - orderDTO.getUnit());
             productRepository.save(product);
         }
+    }
+
+    @Override
+    public void cancelSale(Long saleId) {
+        // validate saleId
+        // get sale by id , update saleStatus
+        Sale sale = getById(saleId);
+        sale.setStatus(false);
+        saleRepository.save(sale);
+
+        //get saleDetail , update saleDetailStatus
+        List<SaleDetail> saleDetails = saleDetailRepository.findBySaleId(saleId);
+
+
+        // get products by ids
+        List<Long> productIds = saleDetails.stream()
+                .map(sd -> sd.getProduct().getId())
+                .toList();
+        List<Product> products = productRepository.findAllById(productIds);
+
+        Map<Long, Product> productMap = products.stream()
+                //.collect(Collectors.toMap(p->p.getId(), p -> p));
+                .collect(Collectors.toMap(Product::getId, Function.identity()));
+        // update stock
+        saleDetails.forEach(sd ->{
+            Product product = productMap.get(sd.getProduct().getId());
+            product.setAvailableUnit(product.getAvailableUnit() + sd.getUnit());
+            productRepository.save(product);
+        });
+
+    }
+
+    @Override
+    public Sale getById(Long saleId) {
+        return saleRepository.findById(saleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Sale", saleId));
     }
 }
